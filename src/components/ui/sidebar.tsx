@@ -11,14 +11,14 @@ const { Sider } = Layout;
 const SideBar = () => {
     const [collapsed, setCollapsed] = useState(false);
 
-    const role = USER_ROLE.STUDENT;
+    const role = USER_ROLE.SUPER_ADMIN;
 
     return (
         <Sider
             collapsible
             collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
-            width={280}
+            width={250}
             style={{
                 overflow: "auto",
                 height: "100vh",
