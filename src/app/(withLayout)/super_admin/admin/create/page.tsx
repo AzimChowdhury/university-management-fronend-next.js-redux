@@ -1,23 +1,21 @@
 'use client'
 import UMBreadCrumb from '@/components/ui/UMBreadCrumb';
 import { getUserInfo } from '@/services/auth.services';
-import { Button } from 'antd';
-import Link from 'next/link';
 import React from 'react';
 
-const ManageStudent = () => {
+const CreateAdmin = () => {
     const { role } = getUserInfo() as any
     return (
         <div>
             <UMBreadCrumb items={
                 [
-                    { label: `${role}`, link: `/${role}` }
+                    { label: `${role}`, link: `/${role}` },
+                    { label: `admin`, link: `/${role}/admin` }
                 ]
             } />
-            <h1>manage student</h1>
-            <Link href='/super_admin/manage-student/create'><Button type='primary'>Create Student</Button></Link>
+            <h1>create admin page</h1>
         </div>
     );
 };
 
-export default ManageStudent;
+export default CreateAdmin;

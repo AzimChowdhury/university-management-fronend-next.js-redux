@@ -3,19 +3,19 @@
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { getUserInfo } from "@/services/auth.services";
 
-const CreateStudent = () => {
+const CreateFaculty = () => {
     const { role } = getUserInfo() as any
     return (
         <div>
             <UMBreadCrumb items={
                 [
                     { label: `${role}`, link: `/${role}` },
-                    { label: `manage-student`, link: `/${role}/manage-student` }
+                    { label: `manage-faculty`, link: `/${role}/manage-faculty` }
                 ]
             } />
-            <h1>create student</h1>
+            <h1> create faculty</h1>
         </div>
     );
 };
 
-export default CreateStudent;
+export default CreateFaculty;
