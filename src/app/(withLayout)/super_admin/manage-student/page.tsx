@@ -1,6 +1,8 @@
 'use client'
 import UMBreadCrumb from '@/components/ui/UMBreadCrumb';
 import { getUserInfo } from '@/services/auth.services';
+import { Button } from 'antd';
+import Link from 'next/link';
 import React from 'react';
 
 const ManageStudent = () => {
@@ -13,6 +15,7 @@ const ManageStudent = () => {
                 ]
             } />
             <h1>manage student</h1>
+            <Link href='/super_admin/manage-student/create'><Button>Create Student</Button></Link>
         </div>
     );
 };

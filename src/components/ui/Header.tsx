@@ -1,3 +1,4 @@
+'use client'
 import { Avatar, Button, Dropdown, Layout, MenuProps, Row, Space } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { getUserInfo, removeUserInfo } from '@/services/auth.services';
@@ -7,7 +8,7 @@ const { Header: AntHeader } = Layout;
 
 const Header = () => {
     const router = useRouter()
-    const { role } = getUserInfo()
+    const { role } = getUserInfo() as any
     const logout = () => {
         removeUserInfo(authKey)
         router.push('/login')
