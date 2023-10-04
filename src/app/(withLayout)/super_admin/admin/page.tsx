@@ -1,6 +1,7 @@
 'use client'
 
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+import ActionBar from "@/components/ui/actionBar";
 import { getUserInfo } from "@/services/auth.services";
 import { Button } from 'antd';
 import Link from 'next/link';
@@ -14,8 +15,11 @@ const ManageAdmin = () => {
                     { label: `${role}`, link: `/${role}` },
                 ]
             } />
-            <h1>admin page</h1>
-            <Link href='/super_admin/admin/create'><Button type='primary'>Create Admin</Button></Link>
+
+
+            <ActionBar title="Admin List">
+                <Link href='/super_admin/admin/create'><Button type='primary'>Create Admin</Button></Link>
+            </ActionBar>
         </div>
     );
 };

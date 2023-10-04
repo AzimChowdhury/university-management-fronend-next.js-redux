@@ -9,7 +9,7 @@ const Contents = ({ children }: { children: React.ReactNode }) => {
         <Content style={{ minHeight: "100vh" }}>
             <Header />
 
-            {children}
+            <div style={{ padding: '15px' }}> {children}</div>
         </Content>
     );
 };
