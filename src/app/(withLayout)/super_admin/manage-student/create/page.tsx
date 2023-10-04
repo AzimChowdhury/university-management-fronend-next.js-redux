@@ -29,7 +29,13 @@ const CreateStudent = () => {
             content: <LocalGuardianInfo />,
         },
     ];
-
+    const handleStudentSubmit = async (data: any) => {
+        try {
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const { role } = getUserInfo() as any
     return (
@@ -41,7 +47,7 @@ const CreateStudent = () => {
                 ]
             } />
             <h1>create student</h1>
-            <StepperForm steps={steps} />
+            <StepperForm submitHandler={(value) => handleStudentSubmit(value)} steps={steps} />
         </div>
     );
 };
