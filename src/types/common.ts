@@ -18,3 +18,10 @@ export type IGenericErrorMessage = {
   path: string | number;
   message: string;
 };
+
+export type UserInfoType = {
+  exp: number;
+  iat: number;
+  role: string;
+  userId: string;
+};
