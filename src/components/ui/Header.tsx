@@ -16,7 +16,7 @@ const Header = () => {
     const items: MenuProps['items'] = [
         {
             key: '0',
-            label: <Button onClick={logout} type='text' danger>Logout</Button>
+            label: <Button onClick={logout} type='default' danger>Logout</Button>
         }
     ]
 

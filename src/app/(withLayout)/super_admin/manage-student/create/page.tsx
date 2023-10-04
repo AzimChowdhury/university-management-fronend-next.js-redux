@@ -1,9 +1,36 @@
 'use client'
 
+import StepperForm from "@/components/StepperForm/StepperFrom";
+import BasicInformation from "@/components/StudentsForms/BasicInformation";
+import GuardianInfo from "@/components/StudentsForms/GuardianInfo";
+import LocalGuardianInfo from "@/components/StudentsForms/LocalGuardianInfo";
+import StudentInfo from "@/components/StudentsForms/StudentInfo";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { getUserInfo } from "@/services/auth.services";
 
 const CreateStudent = () => {
+
+
+    const steps = [
+        {
+            title: 'Student Information',
+            content: <StudentInfo />,
+        },
+        {
+            title: 'Basic Information',
+            content: <BasicInformation />,
+        },
+        {
+            title: 'Guardian Information',
+            content: <GuardianInfo />,
+        },
+        {
+            title: 'Local Guardian Information',
+            content: <LocalGuardianInfo />,
+        },
+    ];
+
+
     const { role } = getUserInfo() as any
     return (
         <div>
@@ -14,6 +41,7 @@ const CreateStudent = () => {
                 ]
             } />
             <h1>create student</h1>
+            <StepperForm steps={steps} />
         </div>
     );
 };

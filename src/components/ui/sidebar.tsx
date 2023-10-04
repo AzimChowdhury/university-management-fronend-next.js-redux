@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Layout, Menu } from "antd";
-
+import './scrollbar.css'
 import { sidebarItems } from "@/constants/sidebarItems";
 import { USER_ROLE } from "@/constants/role";
 import { getUserInfo } from "@/services/auth.services";
@@ -28,6 +28,7 @@ const SideBar = () => {
                 left: 0,
                 top: 0,
                 bottom: 0,
+
             }}
         >
             <div
@@ -47,6 +48,29 @@ const SideBar = () => {
                 mode="inline"
                 items={sidebarItems(role)}
             />
+
+
+
+
+            <style jsx>{`
+        /* Customize the scrollbar */
+        ::-webkit-scrollbar {
+          width: 10px; /* Adjust the scrollbar width */
+        }
+
+        /* Customize the thumb (drag handle) of the scrollbar */
+        ::-webkit-scrollbar-thumb {
+          background: #333; /* Change the thumb color */
+          border-radius: 5px; /* Adjust the thumb's border radius */
+        }
+
+        /* Customize the track (background) of the scrollbar */
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1; /* Change the track color */
+        }
+      `}</style>
+
+
         </Sider>
     );
 };
