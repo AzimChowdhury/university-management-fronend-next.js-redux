@@ -6,16 +6,17 @@ const ADMIN_URL = "/admins";
 
 export const adminApi = BaseApi.injectEndpoints({
   endpoints: (build) => ({
+    // create
     addAdminWithFormData: build.mutation({
       query: (data) => ({
         url: "/users/create-admin",
         method: "POST",
-        data,
+        data: data,
         contentType: "multipart/form-data",
       }),
       invalidatesTags: [tagTypes.admin],
     }),
-
+    // get all
     admins: build.query({
       query: (arg: Record<string, any>) => {
         return {
