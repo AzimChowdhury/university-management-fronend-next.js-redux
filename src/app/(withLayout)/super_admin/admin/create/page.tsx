@@ -6,9 +6,11 @@ import Form from '@/components/forms/From';
 import FormSelectField from '@/components/forms/FromSelectField';
 import UMBreadCrumb from '@/components/ui/UMBreadCrumb';
 import UploadImage from '@/components/ui/uploadImage';
-import { BloodGroups, departmentOptions, genderOption } from '@/constants/global';
+import { BloodGroups, genderOption } from '@/constants/global';
+import { useGetDepartmentQuery } from '@/redux/api/departmentApi';
 import { adminSchema } from '@/schemas/admin';
 import { getUserInfo } from '@/services/auth.services';
+import { IDepartment } from '@/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Col, Row } from 'antd';
 import React from 'react';
@@ -22,6 +24,17 @@ const CreateAdmin = () => {
             console.error(err)
         }
     };
+
+
+    const { data } = useGetDepartmentQuery({ limit: 100, page: 1 })
+    // @ts-ignore
+    const departments: IDepartment[] = data?.departments
+    const departmentOptions = departments?.map((dept) => {
+        return {
+            label: dept?.title,
+            value: dept?.id
+        }
+    })
     return (
         <div>
             <UMBreadCrumb items={
@@ -63,7 +76,7 @@ const CreateAdmin = () => {
                                 <FormSelectField size='large' name='admin.managementDepartment' options={departmentOptions} label='Department' placeholder='select' />
                             </Col>
                             <Col className="gutter-row" span={8} style={{ marginBottom: "10px" }}>
-                                <UploadImage />
+                                <UploadImage name='file' />
                             </Col>
 
 
