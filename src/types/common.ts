@@ -1,7 +1,7 @@
 export interface IMeta {
   limit: number;
   page: number;
-  size: number;
+  total: number;
 }
 
 export type ResponseSuccessType = {
@@ -25,3 +25,11 @@ export type UserInfoType = {
   role: string;
   userId: string;
 };
+
+export interface IDepartment {
+  id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
