@@ -2,14 +2,15 @@
 
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTables from "@/components/ui/UMTables";
-import { useGetDepartmentQuery } from "@/redux/api/departmentApi";
+import { useDeleteSingleDepartmentMutation, useGetDepartmentQuery } from "@/redux/api/departmentApi";
 import { getUserInfo } from "@/services/auth.services";
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 import Link from 'next/link';
 import { useState } from "react";
 import { DeleteOutlined, ReloadOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import ActionBar from "@/components/ui/actionBar";
 import { useDebounced } from "@/redux/hooks";
+import dayjs from 'dayjs'
 
 const Department = () => {
     const { role } = getUserInfo() as any;
@@ -28,7 +29,7 @@ const Department = () => {
     query['sortBy'] = sortBy
     query['sortOrder'] = sortOrder
     // query['searchTerm'] = searchTerm
-
+    const [deleteSingleDepartment] = useDeleteSingleDepartmentMutation()
     const debouncedTerm = useDebounced({
         searchQuery: searchTerm,
         delay: 600
@@ -50,6 +51,9 @@ const Department = () => {
         {
             title: 'CreatedAt',
             dataIndex: 'createdAt',
+            render: function (data: any) {
+                return data && dayjs(data).format('MMM D, YYYY - hh:mm A')
+            },
             sorter: true
         },
         {
@@ -57,13 +61,15 @@ const Department = () => {
             render: function (data: any) {
                 return (
                     <>
-                        <Button style={{ margin: '0px 5px', padding: '0px 10px' }} onClick={() => console.log(data)} type="primary">
+                        {/* <Button style={{ margin: '0px 5px', padding: '0px 10px' }} onClick={() => console.log(data)} type="primary">
                             <EyeOutlined />
-                        </Button>
-                        <Button style={{ margin: '0px 5px', padding: '0px 10px' }} onClick={() => console.log(data)} type="primary">
-                            <EditOutlined />
-                        </Button>
-                        <Button style={{ margin: '0px 5px', padding: '0px 10px' }} onClick={() => console.log(data)} type="primary" danger>
+                        </Button> */}
+                        <Link href={`/super_admin/department/edit/${data?.id}`}>
+                            <Button style={{ margin: '0px 5px', padding: '0px 10px' }} onClick={() => console.log(data)} type="primary">
+                                <EditOutlined />
+                            </Button>
+                        </Link>
+                        <Button style={{ margin: '0px 5px', padding: '0px 10px' }} onClick={() => deleteHandler(data?.id)} type="primary" danger>
                             <DeleteOutlined />
                         </Button>
                     </>
@@ -88,6 +94,18 @@ const Department = () => {
         setSortOrder('')
         setSearchTerm('')
     }
+
+    const deleteHandler = async (id: string) => {
+        message.loading('deleting . . .')
+        try {
+            await deleteSingleDepartment(id)
+            message.success('Department Deleted successfully')
+        } catch (err: any) {
+            console.error(err.message);
+            message.error(err.message)
+        }
+    };
+
 
     return (
         <div>
