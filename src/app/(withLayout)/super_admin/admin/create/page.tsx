@@ -8,8 +8,10 @@ import FormSelectField from "@/components/forms/FromSelectField";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/uploadImage";
 import { BloodGroups, genderOption } from "@/constants/global";
+
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 import { useGetDepartmentQuery } from "@/redux/api/departmentApi";
+
 import { adminSchema } from "@/schemas/admin";
 import { IDepartment } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -40,13 +42,18 @@ const CreateAdminPage = () => {
         formData.append("file", file as Blob);
         formData.append("data", data);
         message.loading("Creating...");
+
         try {
-            await addAdminWithFormData(formData);
+            const res = await addAdminWithFormData(formData);
+            console.log(res);
             message.success("Admin created successfully!");
         } catch (err: any) {
             console.error(err.message);
         }
     };
+
+
+
 
     return (
         <div>
@@ -66,7 +73,6 @@ const CreateAdminPage = () => {
 
             <div>
                 <Form submitHandler={onSubmit} resolver={yupResolver(adminSchema)}>
-                    {/* admin info */}
                     <div
                         style={{
                             border: "1px solid #d9d9d9",

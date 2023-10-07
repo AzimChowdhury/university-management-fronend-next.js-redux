@@ -25,15 +25,15 @@ export const axiosBaseQuery =
         method,
         data,
         params,
-        headers: { "Content-Type": contentType || "application-json" },
+        headers: { "Content-Type": contentType || "application/json" },
       });
       return result;
     } catch (axiosError) {
       let err = axiosError as AxiosError;
       return {
         error: {
-          status: err.response?.status,
-          data: err.response?.data || err.message,
+          status: err?.response?.status,
+          data: err?.response?.data || err?.message,
         },
       };
     }

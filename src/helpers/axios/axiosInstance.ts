@@ -4,7 +4,6 @@ import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 
 const instance = axios.create();
-
 instance.defaults.headers.post["Content-Type"] = "application/json";
 instance.defaults.headers["Accept"] = "application/json";
 instance.defaults.timeout = 60000;
@@ -26,7 +25,7 @@ instance.interceptors.request.use(
 );
 
 // Add a response interceptor
-// @ts-ignore
+//@ts-ignore
 instance.interceptors.response.use(
   function (response) {
     const responseObject: ResponseSuccessType = {
@@ -38,10 +37,11 @@ instance.interceptors.response.use(
   function (error) {
     const responseObject: IGenericErrorResponse = {
       statusCode: error?.response?.data?.statusCode || 500,
-      message: error?.response?.data?.message || "something went wrong",
+      message: error?.response?.data?.message || "Something went wrong",
       errorMessages: error?.response?.data?.message,
     };
     return responseObject;
+    // return Promise.reject(error);
   }
 );
 

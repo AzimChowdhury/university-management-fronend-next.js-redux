@@ -4,13 +4,14 @@ import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTables from "@/components/ui/UMTables";
 import { useDeleteSingleDepartmentMutation, useGetDepartmentQuery } from "@/redux/api/departmentApi";
 import { getUserInfo } from "@/services/auth.services";
-import { Button, Input, message } from 'antd';
+import { Button, Input, Modal, message } from 'antd';
 import Link from 'next/link';
 import { useState } from "react";
 import { DeleteOutlined, ReloadOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import ActionBar from "@/components/ui/actionBar";
 import { useDebounced } from "@/redux/hooks";
 import dayjs from 'dayjs'
+import DeleteModal from "@/components/ui/DeleteModal";
 
 const Department = () => {
     const { role } = getUserInfo() as any;
@@ -22,7 +23,8 @@ const Department = () => {
     const [sortBy, setSortBy] = useState<string>('')
     const [sortOrder, setSortOrder] = useState<string>("")
     const [searchTerm, setSearchTerm] = useState<string>("")
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState('')
 
     query['limit'] = size
     query['page'] = page
@@ -69,7 +71,7 @@ const Department = () => {
                                 <EditOutlined />
                             </Button>
                         </Link>
-                        <Button style={{ margin: '0px 5px', padding: '0px 10px' }} onClick={() => deleteHandler(data?.id)} type="primary" danger>
+                        <Button style={{ margin: '0px 5px', padding: '0px 10px' }} onClick={() => { showModal(); setDeleteId(data?.id) }} type="primary" danger>
                             <DeleteOutlined />
                         </Button>
                     </>
@@ -95,6 +97,7 @@ const Department = () => {
         setSearchTerm('')
     }
 
+
     const deleteHandler = async (id: string) => {
         message.loading('deleting . . .')
         try {
@@ -105,6 +108,24 @@ const Department = () => {
             message.error(err.message)
         }
     };
+
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        deleteHandler(deleteId)
+        setIsModalOpen(false);
+        setDeleteId('')
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+
+
 
 
     return (
@@ -148,6 +169,17 @@ const Department = () => {
                 onPaginationChange={onPaginationChange}
                 onTableChange={onTableChange}
                 showPagination={true}
+            />
+
+
+            {/* delete confirmation modal  */}
+
+            <DeleteModal
+                title="Are you sure you want to delete this department ? "
+                subTitle="Remember once it will be deleted, you will never get it back. "
+                isModalOpen={isModalOpen}
+                handleOk={handleOk}
+                handleCancel={handleCancel}
             />
         </div>
     );

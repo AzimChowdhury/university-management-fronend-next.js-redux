@@ -9,4 +9,5 @@ export const tagTypesList = [
   tagTypes.user,
   tagTypes.department,
   tagTypes.faculty,
+  tagTypes.admin,
 ];
