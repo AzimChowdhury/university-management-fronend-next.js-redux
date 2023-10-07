@@ -5,13 +5,14 @@ import ActionBar from "@/components/ui/actionBar";
 import { useDebounced } from "@/redux/hooks";
 import { getUserInfo } from "@/services/auth.services";
 import { IDepartment } from "@/types";
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 import Link from 'next/link';
 import { useState } from "react";
 import dayjs from 'dayjs'
 import { DeleteOutlined, EditOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons'
 import UMTables from "@/components/ui/UMTables";
 import { useAdminsQuery } from "@/redux/api/adminApi";
+import DeleteModal from "@/components/ui/DeleteModal";
 
 const ManageAdmin = () => {
     const { role } = getUserInfo() as any
@@ -23,6 +24,7 @@ const ManageAdmin = () => {
     const [sortBy, setSortBy] = useState<string>("");
     const [sortOrder, setSortOrder] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
+
 
     query["limit"] = size;
     query["page"] = page;
@@ -136,9 +138,6 @@ const ManageAdmin = () => {
     };
 
 
-
-
-
     return (
         <div>
             <UMBreadCrumb items={
@@ -181,6 +180,7 @@ const ManageAdmin = () => {
                 onTableChange={onTableChange}
                 showPagination={true}
             />
+
         </div>
     );
 };

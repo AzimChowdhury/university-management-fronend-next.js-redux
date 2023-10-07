@@ -44,9 +44,13 @@ const CreateAdminPage = () => {
         message.loading("Creating...");
 
         try {
-            const res = await addAdminWithFormData(formData);
-            console.log(res);
-            message.success("Admin created successfully!");
+            const res: any = await addAdminWithFormData(formData);
+            if (res?.data) {
+                message.success("Admin created successfully!");
+            } else {
+                message.error("Failed to create admin");
+            }
+
         } catch (err: any) {
             console.error(err.message);
         }
