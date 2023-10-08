@@ -10,11 +10,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
+import { useAcademicDepartmentsQuery, useDeleteAcademicDepartmentMutation } from "@/redux/api/academic/deptApi";
 import ActionBar from "@/components/ui/actionBar";
 import UMTables from "@/components/ui/UMTables";
-import { useAcademicFacultiesQuery, useDeleteAcademicFacultyMutation } from "@/redux/api/academic/facultyApi";
 
-const ACFacultyPage = () => {
+const ACDepartmentPage = () => {
     const query: Record<string, any> = {};
 
     const [page, setPage] = useState<number>(1);
@@ -22,7 +22,7 @@ const ACFacultyPage = () => {
     const [sortBy, setSortBy] = useState<string>("");
     const [sortOrder, setSortOrder] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [deleteAcademicFaculty] = useDeleteAcademicFacultyMutation();
+    const [deleteAcademicDepartment] = useDeleteAcademicDepartmentMutation();
 
     query["limit"] = size;
     query["page"] = page;
@@ -38,18 +38,18 @@ const ACFacultyPage = () => {
     if (!!debouncedTerm) {
         query["searchTerm"] = debouncedTerm;
     }
-    const { data, isLoading } = useAcademicFacultiesQuery({ ...query });
+    const { data, isLoading } = useAcademicDepartmentsQuery({ ...query });
 
-    const academicFaculties = data?.academicFaculties;
+    const academicDepartments = data?.academicDepartments;
     const meta = data?.meta;
 
     const deleteHandler = async (id: string) => {
         message.loading("Deleting.....");
         try {
             //   console.log(data);
-            const res = await deleteAcademicFaculty(id);
+            const res = await deleteAcademicDepartment(id);
             if (res) {
-                message.success("Faculty Deleted successfully");
+                message.success("Department Deleted successfully");
             }
         } catch (err: any) {
             //   console.error(err.message);
@@ -61,6 +61,13 @@ const ACFacultyPage = () => {
         {
             title: "Title",
             dataIndex: "title",
+        },
+        {
+            title: "Faculty",
+            dataIndex: "academicFaculty",
+            render: function (data: any) {
+                return <>{data?.title}</>;
+            },
         },
         {
             title: "CreatedAt",
@@ -75,7 +82,7 @@ const ACFacultyPage = () => {
             render: function (data: any) {
                 return (
                     <>
-                        <Link href={`/admin/academic/faculty/edit/${data?.id}`}>
+                        <Link href={`/admin/academic/department/edit/${data?.id}`}>
                             <Button
                                 style={{
                                     margin: "0px 5px",
@@ -128,7 +135,7 @@ const ACFacultyPage = () => {
                 ]}
             />
 
-            <ActionBar title="Academic Faculty List">
+            <ActionBar title="Academic Department List">
                 <Input
                     type="text"
                     size="large"
@@ -141,7 +148,7 @@ const ACFacultyPage = () => {
                     }}
                 />
                 <div>
-                    <Link href="/admin/academic/faculty/create">
+                    <Link href="/admin/academic/department/create">
                         <Button type="primary">Create</Button>
                     </Link>
                     {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -159,7 +166,7 @@ const ACFacultyPage = () => {
             <UMTables
                 loading={isLoading}
                 columns={columns}
-                dataSource={academicFaculties}
+                dataSource={academicDepartments}
                 pageSize={size}
                 totalPages={meta?.total}
                 showSizeChanger={true}
@@ -171,4 +178,4 @@ const ACFacultyPage = () => {
     );
 };
 
-export default ACFacultyPage;
+export default ACDepartmentPage;

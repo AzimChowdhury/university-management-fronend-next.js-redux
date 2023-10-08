@@ -3,12 +3,12 @@
 import { Input, Select } from "antd";
 import { useFormContext, Controller } from "react-hook-form"
 
-type SelectOptions = {
+export type SelectOptions = {
     label: string;
     value: string
 }
 
-type SelectFieldProps = {
+export type SelectFieldProps = {
     options: SelectOptions[]
     name: string;
     size?: 'large' | 'small';
