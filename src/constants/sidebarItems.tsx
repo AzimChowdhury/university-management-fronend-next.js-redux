@@ -1,3 +1,4 @@
+"use client"
 import type { MenuProps } from "antd";
 import {
     ProfileOutlined,
