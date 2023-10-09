@@ -38,7 +38,7 @@ const CreateACSemesterPage = () => {
 
         message.loading("Creating.....");
         try {
-            const res = addAcademicSemester(data);
+            const res = await addAcademicSemester(data);
             if (!!res) {
                 message.success("Academic Semester Created successfully");
             }

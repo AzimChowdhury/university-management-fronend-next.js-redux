@@ -3,7 +3,7 @@
 import FormInput from "@/components/forms/FormInput";
 import Form from "@/components/forms/From";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { useAddAcademicFacultyMutation } from "@/redux/api/department/facultyApi";
+import { useAddAcademicFacultyMutation } from "@/redux/api/academic/facultyApi";
 
 
 import { Button, Col, Row, message } from "antd";

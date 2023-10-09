@@ -50,10 +50,12 @@ const ACSemesterPage = () => {
     const deleteHandler = async (id: string) => {
         message.loading("Deleting.....");
         try {
-            //   console.log(data);
-            const res = await deleteAcademicSemester(id);
-            if (!!res) {
+            console.log(id);
+            const res: any = await deleteAcademicSemester(id);
+            if (res.data) {
                 message.success("Academic Semester Deleted successfully");
+            } else {
+                message.error('failed to Delete');
             }
         } catch (err: any) {
             //   console.error(err.message);
@@ -112,7 +114,7 @@ const ACSemesterPage = () => {
                             </Button>
                         </Link>
                         <Button
-                            onClick={() => deleteHandler(data?.id)}
+                            onClick={() => deleteHandler(data)}
                             type="primary"
                             danger
                         >

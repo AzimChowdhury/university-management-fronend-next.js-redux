@@ -46,10 +46,11 @@ const ACFacultyPage = () => {
     const deleteHandler = async (id: string) => {
         message.loading("Deleting.....");
         try {
-            //   console.log(data);
-            const res = await deleteAcademicFaculty(id);
-            if (res) {
+            const res: any = await deleteAcademicFaculty(id);
+            if (res.data) {
                 message.success("Faculty Deleted successfully");
+            } else {
+                message.error('failed to delete')
             }
         } catch (err: any) {
             //   console.error(err.message);
