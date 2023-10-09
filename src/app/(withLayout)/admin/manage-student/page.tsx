@@ -43,18 +43,22 @@ const ManageStudent = () => {
 
     const students = data?.students;
     const meta = data?.meta;
-    // console.log(students);
 
     const columns = [
         {
             title: "Id",
-            dataIndex: "studentId",
+            dataIndex: "id",
             sorter: true,
         },
         {
             title: "Name",
-            render: function (data: Record<string, string>) {
-                const fullName = `${data?.firstName} ${data?.middleName} ${data?.lastName}`;
+            render: function (data: {
+                name: {
+                    firstName: string
+                    , middleName: string, lastName: string
+                }
+            }) {
+                const fullName = `${data?.name?.firstName} ${data?.name?.middleName} ${data?.name?.lastName}`;
                 return <>{fullName}</>;
             },
         },

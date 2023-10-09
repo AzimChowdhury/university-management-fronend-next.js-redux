@@ -1,53 +1,72 @@
-'use client'
-
+"use client";
 import StepperForm from "@/components/StepperForm/StepperFrom";
-import BasicInformation from "@/components/StudentsForms/BasicInformation";
+import StudentBasicInfo from "@/components/StudentsForms/BasicInformation";
 import GuardianInfo from "@/components/StudentsForms/GuardianInfo";
 import LocalGuardianInfo from "@/components/StudentsForms/LocalGuardianInfo";
 import StudentInfo from "@/components/StudentsForms/StudentInfo";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { getUserInfo } from "@/services/auth.services";
+import { useAddStudentWithFormDataMutation } from "@/redux/api/studentApi";
+import { message } from "antd";
 
 const CreateStudent = () => {
-
-
+    const [addStudentWithFormData] = useAddStudentWithFormDataMutation();
     const steps = [
         {
-            title: 'Student Information',
+            title: "Student Information",
             content: <StudentInfo />,
         },
         {
-            title: 'Basic Information',
-            content: <BasicInformation />,
+            title: "Basic Information",
+            content: <StudentBasicInfo />,
         },
         {
-            title: 'Guardian Information',
+            title: "Guardian Information",
             content: <GuardianInfo />,
         },
         {
-            title: 'Local Guardian Information',
+            title: "Local Guardian Information",
             content: <LocalGuardianInfo />,
         },
     ];
-    const handleStudentSubmit = async (data: any) => {
-        try {
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
-    const { role } = getUserInfo() as any
+    const handleStudentSubmit = async (values: any) => {
+        const obj = { ...values };
+        const file = obj["file"];
+        delete obj["file"];
+        const data = JSON.stringify(obj);
+        const formData = new FormData();
+        formData.append("file", file as Blob);
+        formData.append("data", data);
+        message.loading("Creating...");
+        try {
+            const res: any = await addStudentWithFormData(formData);
+            if (res.data) {
+                message.success("Student created successfully!");
+            } else {
+                message.error("failed to create student");
+            }
+        } catch (err: any) {
+            console.error(err.message);
+        }
+    };
+
+    const base = "admin";
     return (
         <div>
-            <UMBreadCrumb items={
-                [
-                    { label: `${role}`, link: `/${role}` },
-                    { label: `manage-student`, link: `/${role}/manage-student` }
-                ]
-            } />
-            <h1>create student</h1>
-            <StepperForm submitHandler={(value) => handleStudentSubmit(value)} steps={steps} />
+            <UMBreadCrumb
+                items={[
+                    { label: `${base}`, link: `/${base}` },
+                    { label: "manage-student", link: `/${base}/manage-student` },
+                ]}
+            />
+            <h1 style={{ margin: "10px 0px" }}>Create Student</h1>
+            <StepperForm
+                persistKey="student-create-form"
+                submitHandler={(value) => {
+                    handleStudentSubmit(value);
+                }}
+                steps={steps}
+            />
         </div>
     );
 };
