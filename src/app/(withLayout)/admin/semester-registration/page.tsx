@@ -17,7 +17,7 @@ import dayjs from "dayjs";
 import {
     useDeleteSemesterRegistrationsMutation,
     useSemesterRegistrationsQuery,
-    useAddSemesterRegistrationsMutation,
+    useStartNewSemesterMutation,
 } from "@/redux/api/semesterRegistrationApi";
 
 const SemesterRegistrationPage = () => {
@@ -31,7 +31,7 @@ const SemesterRegistrationPage = () => {
     const [deleteSemesterRegistrations] =
         useDeleteSemesterRegistrationsMutation();
 
-    const [addSemesterRegistrations] = useAddSemesterRegistrationsMutation();
+    const [startNewSemester] = useStartNewSemesterMutation();
 
     query["limit"] = size;
     query["page"] = page;
@@ -51,14 +51,19 @@ const SemesterRegistrationPage = () => {
 
     const semesterRegistrations = data?.semesterRegistrations;
     const meta = data?.meta;
-    // console.log(semesterRegistrations);
 
     const handleStartSemester = async (id: string) => {
+
         try {
-            const res = await addSemesterRegistrations(id).unwrap();
-            message.success(res);
+            const res = await startNewSemester(id).unwrap();
+
+            if (res?.data) {
+                message.success('semester started successfully');
+            } else {
+                message.error('failed to start semester')
+            }
         } catch (err: any) {
-            message.error(err?.message);
+            console.log(err?.message);
         }
     };
 
