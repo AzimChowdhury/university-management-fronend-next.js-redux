@@ -24,7 +24,7 @@ const CreateCoursePage = () => {
     const onSubmit = async (data: any) => {
         data.credits = parseInt(data?.credits);
 
-        const coursePreRequisitesOptions = data?.coursePreRequisites?.map(
+        const coursePreRequisitesOptions = data?.preRequisiteCourses?.map(
             (id: string) => {
                 return {
                     courseId: id,
@@ -32,7 +32,7 @@ const CreateCoursePage = () => {
             }
         );
 
-        data.coursePreRequisites = coursePreRequisitesOptions;
+        data.preRequisiteCourses = coursePreRequisitesOptions;
 
         message.loading("Creating.....");
         try {
@@ -70,7 +70,7 @@ const CreateCoursePage = () => {
                         <div style={{ margin: "10px 0px" }}>
                             <FormMultiSelectField
                                 options={coursesOptions as SelectOptions[]}
-                                name="coursePreRequisites"
+                                name="preRequisiteCourses"
                                 label="Pre Requisite Courses"
                             />
                         </div>
