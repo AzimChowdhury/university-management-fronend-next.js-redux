@@ -1,4 +1,4 @@
-import { IMeta, IStudent } from "@/types";
+import { IMeta, IMyCourse, IStudent } from "@/types";
 import { BaseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 
@@ -57,6 +57,47 @@ export const studentApi = BaseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.student],
     }),
+    // my courses
+    myCourses: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${STUDENT_URL}/my-courses`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: IMyCourse[], meta: IMeta) => {
+        return {
+          myCourses: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.student],
+    }),
+    myCourseSchedules: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${STUDENT_URL}/my-course-schedules`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: IStudent[], meta: IMeta) => {
+        return {
+          myCourseSchedules: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.student],
+    }),
+    myAcademicInfos: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${STUDENT_URL}/my-academic-infos`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [tagTypes.student],
+    }),
   }),
 });
 
@@ -66,4 +107,8 @@ export const {
   useStudentQuery, // get single
   useUpdateStudentMutation, // update
   useDeleteStudentMutation, // delete
+  // my courses
+  useMyCoursesQuery,
+  useMyCourseSchedulesQuery,
+  useMyAcademicInfosQuery,
 } = studentApi;

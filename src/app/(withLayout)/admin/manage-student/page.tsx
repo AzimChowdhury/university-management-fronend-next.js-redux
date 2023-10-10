@@ -47,18 +47,17 @@ const ManageStudent = () => {
     const columns = [
         {
             title: "Id",
-            dataIndex: "id",
+            dataIndex: "studentId",
             sorter: true,
         },
         {
             title: "Name",
             render: function (data: {
-                name: {
-                    firstName: string
-                    , middleName: string, lastName: string
-                }
+
+                firstName: string
+                , middleName: string, lastName: string
             }) {
-                const fullName = `${data?.name?.firstName} ${data?.name?.middleName} ${data?.name?.lastName}`;
+                const fullName = `${data?.firstName} ${data?.middleName} ${data?.lastName}`;
                 return <>{fullName}</>;
             },
         },
@@ -114,7 +113,7 @@ const ManageStudent = () => {
         },
     ];
     const onPaginationChange = (page: number, pageSize: number) => {
-        console.log("Page:", page, "PageSize:", pageSize);
+
         setPage(page);
         setSize(pageSize);
     };
