@@ -10,7 +10,7 @@ import { IOfferedCourseSection } from "@/types";
 import { useFacultyCourseStudentsQuery } from "@/redux/api/facultyApi";
 
 const FacultyCoursesStudentsPage = ({ searchParams }: Record<string, any>) => {
-    //   console.log(searchParams);
+
     const { courseId, offeredCourseSectionId } = searchParams;
 
     const query: Record<string, any> = {};
@@ -41,12 +41,12 @@ const FacultyCoursesStudentsPage = ({ searchParams }: Record<string, any>) => {
     if (!!debouncedSearchTerm) {
         query["searchTerm"] = debouncedSearchTerm;
     }
+
     const { data, isLoading } = useFacultyCourseStudentsQuery({ ...query });
 
     const myCourseStudents = data?.myCourseStudents;
     const meta = data?.meta;
 
-    //   console.log(myCourseStudents);
 
     const columns = [
         {
@@ -86,13 +86,13 @@ const FacultyCoursesStudentsPage = ({ searchParams }: Record<string, any>) => {
         },
     ];
     const onPaginationChange = (page: number, pageSize: number) => {
-        console.log("Page:", page, "PageSize:", pageSize);
+
         setPage(page);
         setSize(pageSize);
     };
     const onTableChange = (pagination: any, filter: any, sorter: any) => {
         const { order, field } = sorter;
-        // console.log(order, field);
+
         setSortBy(field as string);
         setSortOrder(order === "ascend" ? "asc" : "desc");
     };

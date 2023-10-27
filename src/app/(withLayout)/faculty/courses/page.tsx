@@ -37,7 +37,7 @@ const FacultyCoursesPage = () => {
     const myCourses = data?.myCourses;
     const meta = data?.meta;
 
-    // console.log(myCourses);
+
 
     const columns = [
         {
@@ -99,7 +99,7 @@ const FacultyCoursesPage = () => {
                             return (
                                 <div key={index} style={{ margin: "20px 0px" }}>
                                     <Link
-                                        href={`/faculty/courses/student?courseId=${data?.course?.id}&offeredCourseSectionId=${el?.id}`}
+                                        href={`/faculty/courses/student?courseId=${data?.course?.id}`}
                                     >
                                         <Button type="primary">View all students</Button>
                                     </Link>
@@ -112,13 +112,13 @@ const FacultyCoursesPage = () => {
         },
     ];
     const onPaginationChange = (page: number, pageSize: number) => {
-        console.log("Page:", page, "PageSize:", pageSize);
+
         setPage(page);
         setSize(pageSize);
     };
     const onTableChange = (pagination: any, filter: any, sorter: any) => {
         const { order, field } = sorter;
-        // console.log(order, field);
+
         setSortBy(field as string);
         setSortOrder(order === "ascend" ? "asc" : "desc");
     };

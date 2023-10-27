@@ -2,6 +2,7 @@
 import { Layout } from 'antd'
 import UMBreadCrumb from './UMBreadCrumb';
 import Header from './Header';
+import dynamic from 'next/dynamic';
 const { Content } = Layout
 
 const Contents = ({ children }: { children: React.ReactNode }) => {
@@ -14,4 +15,4 @@ const Contents = ({ children }: { children: React.ReactNode }) => {
     );
 };
 
-export default Contents;
+export default dynamic(() => Promise.resolve(Contents), { ssr: false })

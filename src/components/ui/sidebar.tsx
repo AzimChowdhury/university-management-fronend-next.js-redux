@@ -7,6 +7,7 @@ import { sidebarItems } from "@/constants/sidebarItems";
 import { USER_ROLE } from "@/constants/role";
 import { getUserInfo } from "@/services/auth.services";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 const { Sider } = Layout;
 
@@ -75,4 +76,4 @@ const SideBar = () => {
     );
 };
 
-export default SideBar;
+export default dynamic(() => Promise.resolve(SideBar), { ssr: false })
